@@ -4,6 +4,8 @@ using PartyHome.Data;
 using System.Linq;
 using PartyHome.Controllers;
 using PartyHome.DTO;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PartyHome.Controllers
 {
@@ -13,20 +15,14 @@ namespace PartyHome.Controllers
         public EventoController(ApplicationDbContext database){
             this.database = database;
         }
-        public IActionResult Index(){
+        public async Task<IActionResult> Index(){
             var evento  = database.Eventos.ToList();
             var ListaShow = database.CasaDeShows.ToList();
          ViewBag.CasaDeShows=database.CasaDeShows.ToList();
-            return View(evento);
+            return View(await database.Eventos.ToListAsync());
         }
         public IActionResult Cadastrar(){
          ViewBag.CasaDeShows = database.CasaDeShows.ToList();
-        var Contagem = database.Eventos.ToList();
-        var aux = Contagem.Count;
-        if(aux == 0){
-            return View("Erro");
-        }
-
             return View();
         }        
 
@@ -42,15 +38,27 @@ namespace PartyHome.Controllers
             return RedirectToAction("Index");
 
         }
-        public IActionResult Comprar(){
-            return RedirectToAction();
-        }
+
         [HttpPost]
-        public IActionResult Salvar( Evento evento, EventoDTO eventoTemporario){
-            if(evento.Id == 0){evento.CasaId = database.CasaDeShows.First(registroCasa => registroCasa.Id == evento.CasaId.Id);
-                database.Eventos.Add(evento);
-                
-            }else{
+        public IActionResult Salvar( Evento evento){
+                                    var Contagem = database.Eventos.ToList();
+                                    if (ModelState.IsValid){
+                                      Evento evento1 = new Evento(); 
+
+                                      evento1.Event = evento.Event;
+                                      evento1.Capacidade = evento.Capacidade;
+                                      evento1.QtdIngressos = evento.QtdIngressos;
+                                      evento1.Data = evento.Data;
+                                      evento1.Custo = evento.Custo;
+                                      evento1.Genero = evento.Genero;
+                                     evento1.CasaId = database.CasaDeShows.First(c => c.Id == evento.CasaId.Id);
+
+                database.Eventos.Add(evento1);
+                database.SaveChanges();
+                return RedirectToAction("Index");}
+
+       
+           else{
                //Evento eventoDoBanco = database.Eventos.First(registro => registro.Id == evento.Id);
                evento.CasaId = database.CasaDeShows.First(registroCasa => registroCasa.Id == evento.CasaId.Id);
 

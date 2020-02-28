@@ -24,7 +24,7 @@ namespace PartyHome.Controllers
         }
         public IActionResult Deletar(int Id){
             CasaDeShow casadeshow = database.CasaDeShows.First(registro => registro.Id == Id);
-            database.CasaDeShows .Remove(casadeshow);
+            database.CasaDeShows.Remove(casadeshow);
             database.SaveChanges();
             return RedirectToAction("Index");
 

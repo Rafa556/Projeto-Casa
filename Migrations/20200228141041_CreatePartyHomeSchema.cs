@@ -62,25 +62,6 @@ namespace PartyHome.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Eventos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Event = table.Column<string>(nullable: true),
-                    Capacidade = table.Column<int>(nullable: false),
-                    QtdIngressos = table.Column<int>(nullable: false),
-                    Data = table.Column<string>(nullable: true),
-                    Custo = table.Column<float>(nullable: false),
-                    Local = table.Column<string>(nullable: true),
-                    Genero = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Eventos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -186,6 +167,54 @@ namespace PartyHome.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Eventos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Event = table.Column<string>(nullable: true),
+                    Capacidade = table.Column<int>(nullable: false),
+                    QtdIngressos = table.Column<int>(nullable: false),
+                    Data = table.Column<string>(nullable: true),
+                    Custo = table.Column<float>(nullable: false),
+                    Genero = table.Column<string>(nullable: true),
+                    CasaIdId = table.Column<int>(nullable: true),
+                    QuantidadeIngressos = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Eventos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Eventos_CasaDeShows_CasaIdId",
+                        column: x => x.CasaIdId,
+                        principalTable: "CasaDeShows",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Compras",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EventosId = table.Column<int>(nullable: true),
+                    DataComprar = table.Column<DateTime>(nullable: false),
+                    TotalComprar = table.Column<float>(nullable: false),
+                    QtdIngressos = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Compras", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Compras_Eventos_EventosId",
+                        column: x => x.EventosId,
+                        principalTable: "Eventos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -222,6 +251,16 @@ namespace PartyHome.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Compras_EventosId",
+                table: "Compras",
+                column: "EventosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Eventos_CasaIdId",
+                table: "Eventos",
+                column: "CasaIdId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -242,16 +281,19 @@ namespace PartyHome.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CasaDeShows");
-
-            migrationBuilder.DropTable(
-                name: "Eventos");
+                name: "Compras");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Eventos");
+
+            migrationBuilder.DropTable(
+                name: "CasaDeShows");
         }
     }
 }

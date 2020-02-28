@@ -20526,11 +20526,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\RLDF\\Documents\\PartyHome\\Views\\Comprar\\Historico.cshtml",
-      "TargetPath": "Views\\Comprar\\Historico.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\RLDF\\Documents\\PartyHome\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"

@@ -5,10 +5,11 @@
     <style>
          body {background-color: #9c9c9c;}
     </style>
-@foreach(var evento in Model){
+    
+        @foreach(var evento in Model){
+
     <div class="row">
 
-   
     <div>
     <p><b><h4><a class="mr-2" style="font-size:30px;color:#ffd600">Evento: </a>@evento.Event</h4></b></p>
     <p><b><h4><a class="mr-2" style="font-size:30px;color:#ffd600">Capacidade de pessoas: </a> @evento.Capacidade</h4></b></p>
@@ -20,6 +21,7 @@
 
     <a href="/Evento/Editar/@evento.Id" class="bte bte-success" style="font-size:30px;border:2px solid Black;background-color:#0000b6;color: White ">-Editar-</a>
     <a href="/Evento/Deletar/@evento.Id" class="bte bte-danger" style="font-size:30px;border:2px solid Black;background-color:#c90000;color: White ">-Apagar-</a>
+    <a type="submmit" asp-route-Id="@evento.Id" asp-controller="Comprar" asp-action="Buy" class="btn btn-info mt-2">Comprar</a>
     <hr>
         </div> 
          <div>

@@ -91,4 +91,5 @@ C:\Users\RLDF\Documents\PartyHome\obj\Debug\netcoreapp3.1\Razor\Views\CasaDeShow
 C:\Users\RLDF\Documents\PartyHome\obj\Debug\netcoreapp3.1\Razor\Views\Evento\Cadastrar.cshtml.g.cs
 C:\Users\RLDF\Documents\PartyHome\obj\Debug\netcoreapp3.1\Razor\Views\Evento\Index.cshtml.g.cs
 C:\Users\RLDF\Documents\PartyHome\obj\Debug\netcoreapp3.1\Razor\Views\Home\Comprar.cshtml.g.cs
+C:\Users\RLDF\Documents\PartyHome\obj\Debug\netcoreapp3.1\Razor\Views\Comprar\Buy.cshtml.g.cs
 C:\Users\RLDF\Documents\PartyHome\obj\Debug\netcoreapp3.1\Razor\Views\Evento\Erro.cshtml.g.cs

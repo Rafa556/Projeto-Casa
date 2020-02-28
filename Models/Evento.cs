@@ -9,6 +9,7 @@ namespace PartyHome.Models
         public string Data{get; set;}
         public float Custo {get; set;}
         public string Genero{get; set;}    
-        public CasaDeShow CasaId {get; set;}    
+        public CasaDeShow CasaId {get; set;}
+        public float QuantidadeIngressos { get; set; }
     }
 }

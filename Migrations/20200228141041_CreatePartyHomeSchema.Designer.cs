@@ -9,8 +9,8 @@ using PartyHome.Data;
 namespace PartyHome.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200226171950_AlterandoEvento")]
-    partial class AlterandoEvento
+    [Migration("20200228141041_CreatePartyHomeSchema")]
+    partial class CreatePartyHomeSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,6 +232,31 @@ namespace PartyHome.Migrations
                     b.ToTable("CasaDeShows");
                 });
 
+            modelBuilder.Entity("PartyHome.Models.Comprar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataComprar")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("EventosId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("QtdIngressos")
+                        .HasColumnType("float");
+
+                    b.Property<float>("TotalComprar")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventosId");
+
+                    b.ToTable("Compras");
+                });
+
             modelBuilder.Entity("PartyHome.Models.Evento", b =>
                 {
                     b.Property<int>("Id")
@@ -258,6 +283,9 @@ namespace PartyHome.Migrations
 
                     b.Property<int>("QtdIngressos")
                         .HasColumnType("int");
+
+                    b.Property<float>("QuantidadeIngressos")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -315,6 +343,13 @@ namespace PartyHome.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PartyHome.Models.Comprar", b =>
+                {
+                    b.HasOne("PartyHome.Models.Evento", "Eventos")
+                        .WithMany()
+                        .HasForeignKey("EventosId");
                 });
 
             modelBuilder.Entity("PartyHome.Models.Evento", b =>
