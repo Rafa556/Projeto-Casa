@@ -3,7 +3,6 @@ using PartyHome.Models;
 using PartyHome.Data;
 using System.Linq;
 using PartyHome.Controllers;
-using PartyHome.DTO;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,8 +26,8 @@ namespace PartyHome.Controllers
         }        
 
         public IActionResult Editar(int Id){
+            ViewBag.CasaDeShows =database.CasaDeShows.ToList();
             Evento evento = database.Eventos.First(registro => registro.Id == Id);
-            ViewBag.CasaDeShows=database.CasaDeShows.ToList();
             return View("Cadastrar", evento);
         }
         public IActionResult Deletar(int Id){
@@ -59,16 +58,8 @@ namespace PartyHome.Controllers
 
        
            else{
-               //Evento eventoDoBanco = database.Eventos.First(registro => registro.Id == evento.Id);
-               evento.CasaId = database.CasaDeShows.First(registroCasa => registroCasa.Id == evento.CasaId.Id);
 
-               /* eventoDoBanco.Event = evento.Event;
-                eventoDoBanco.Capacidade = evento.Capacidade;
-                eventoDoBanco.QtdIngressos = evento.QtdIngressos;
-                eventoDoBanco.Data = evento.Data;
-                eventoDoBanco.Custo = evento.Custo;
-                eventoDoBanco.Local = evento.Local;
-                eventoDoBanco.Genero = evento.Genero;*/
+            evento.CasaId = database.CasaDeShows.First(registroCasa => registroCasa.Id == evento.CasaId.Id);
 
             database.Update(evento);
             }  

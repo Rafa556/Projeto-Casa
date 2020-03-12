@@ -11,8 +11,11 @@ namespace PartyHome.Data
     {
 
         public DbSet<CasaDeShow> CasaDeShows {get; set;}
+        public DbSet<CasaApi> CasaApiS {get; set;}
         public DbSet<Evento> Eventos {get; set;}
-        public DbSet<Comprar> Compras {get; set;}
+        public DbSet<EventoApi> EventoApis {get; set;}
+        public DbSet<VendaApi> VendasApi {get; set;}
+        public DbSet<UsuarioAPI> UsuariosAPI {get; set;}
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

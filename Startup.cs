@@ -30,10 +30,15 @@ namespace PartyHome
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<IdentityUser>(config => {
+                
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
            services.AddRazorPages();
+           services.AddSwaggerGen(config => {
+               config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo {Title="API DE PRODUTOS",Version = "v1"});
+           });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +58,16 @@ namespace PartyHome
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(config => {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "v1 docs");
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -65,6 +75,8 @@ namespace PartyHome
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+
         }
     }
 }

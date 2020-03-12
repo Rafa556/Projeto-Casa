@@ -22,7 +22,7 @@ namespace PartyHome.Controllers
             CasaDeShow casadeshow = database.CasaDeShows.First(registro => registro.Id == Id);
             return View("Cadastrar", casadeshow);
         }
-        public IActionResult Deletar(int Id){
+       public IActionResult Deletar(int Id){
             CasaDeShow casadeshow = database.CasaDeShows.First(registro => registro.Id == Id);
             database.CasaDeShows.Remove(casadeshow);
             database.SaveChanges();

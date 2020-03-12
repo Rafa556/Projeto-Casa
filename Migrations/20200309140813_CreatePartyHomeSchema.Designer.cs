@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PartyHome.Data;
 
 namespace PartyHome.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200309140813_CreatePartyHomeSchema")]
+    partial class CreatePartyHomeSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,6 +249,31 @@ namespace PartyHome.Migrations
                     b.ToTable("CasaDeShows");
                 });
 
+            modelBuilder.Entity("PartyHome.Models.Comprar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataComprar")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("EventosId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("QtdIngressos")
+                        .HasColumnType("float");
+
+                    b.Property<float>("TotalComprar")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventosId");
+
+                    b.ToTable("Compras");
+                });
+
             modelBuilder.Entity("PartyHome.Models.Evento", b =>
                 {
                     b.Property<int>("Id")
@@ -321,43 +348,6 @@ namespace PartyHome.Migrations
                     b.ToTable("EventoApis");
                 });
 
-            modelBuilder.Entity("PartyHome.Models.UsuarioAPI", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UsuariosAPI");
-                });
-
-            modelBuilder.Entity("PartyHome.Models.VendaApi", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Evento")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("QtdIngressos")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Valor")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VendasApi");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -407,6 +397,13 @@ namespace PartyHome.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PartyHome.Models.Comprar", b =>
+                {
+                    b.HasOne("PartyHome.Models.Evento", "Eventos")
+                        .WithMany()
+                        .HasForeignKey("EventosId");
                 });
 
             modelBuilder.Entity("PartyHome.Models.Evento", b =>

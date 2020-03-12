@@ -48,6 +48,20 @@ namespace PartyHome.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CasaApiS",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(nullable: true),
+                    Endereco = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CasaApiS", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CasaDeShows",
                 columns: table => new
                 {
@@ -168,6 +182,32 @@ namespace PartyHome.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EventoApis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Event = table.Column<string>(nullable: true),
+                    Capacidade = table.Column<int>(nullable: false),
+                    QtdIngressos = table.Column<int>(nullable: false),
+                    Data = table.Column<string>(nullable: true),
+                    Custo = table.Column<float>(nullable: false),
+                    Genero = table.Column<string>(nullable: true),
+                    CasaIdId = table.Column<int>(nullable: true),
+                    QuantidadeIngressos = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventoApis", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventoApis_CasaDeShows_CasaIdId",
+                        column: x => x.CasaIdId,
+                        principalTable: "CasaDeShows",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Eventos",
                 columns: table => new
                 {
@@ -258,6 +298,11 @@ namespace PartyHome.Migrations
                 column: "EventosId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EventoApis_CasaIdId",
+                table: "EventoApis",
+                column: "CasaIdId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Eventos_CasaIdId",
                 table: "Eventos",
                 column: "CasaIdId");
@@ -281,7 +326,13 @@ namespace PartyHome.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CasaApiS");
+
+            migrationBuilder.DropTable(
                 name: "Compras");
+
+            migrationBuilder.DropTable(
+                name: "EventoApis");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

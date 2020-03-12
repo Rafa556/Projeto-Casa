@@ -1,8 +1,6 @@
-using System;
-
 namespace PartyHome.Models
 {
-    public class CasaDeShow
+    public class CasaApi
     {
         public int Id{get; set;}
         public string Nome{get; set;}

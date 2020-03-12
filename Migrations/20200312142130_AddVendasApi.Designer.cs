@@ -9,8 +9,8 @@ using PartyHome.Data;
 namespace PartyHome.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200228141041_CreatePartyHomeSchema")]
-    partial class CreatePartyHomeSchema
+    [Migration("20200312142130_AddVendasApi")]
+    partial class AddVendasApi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -215,6 +215,23 @@ namespace PartyHome.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PartyHome.Models.CasaApi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Endereco")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CasaApiS");
+                });
+
             modelBuilder.Entity("PartyHome.Models.CasaDeShow", b =>
                 {
                     b.Property<int>("Id")
@@ -230,31 +247,6 @@ namespace PartyHome.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CasaDeShows");
-                });
-
-            modelBuilder.Entity("PartyHome.Models.Comprar", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DataComprar")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("EventosId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("QtdIngressos")
-                        .HasColumnType("float");
-
-                    b.Property<float>("TotalComprar")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventosId");
-
-                    b.ToTable("Compras");
                 });
 
             modelBuilder.Entity("PartyHome.Models.Evento", b =>
@@ -292,6 +284,63 @@ namespace PartyHome.Migrations
                     b.HasIndex("CasaIdId");
 
                     b.ToTable("Eventos");
+                });
+
+            modelBuilder.Entity("PartyHome.Models.EventoApi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Capacidade")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CasaIdId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Custo")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Event")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Genero")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("QtdIngressos")
+                        .HasColumnType("int");
+
+                    b.Property<float>("QuantidadeIngressos")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CasaIdId");
+
+                    b.ToTable("EventoApis");
+                });
+
+            modelBuilder.Entity("PartyHome.Models.VendaApi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Evento")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("QtdIngressos")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Valor")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vendas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -345,14 +394,14 @@ namespace PartyHome.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PartyHome.Models.Comprar", b =>
+            modelBuilder.Entity("PartyHome.Models.Evento", b =>
                 {
-                    b.HasOne("PartyHome.Models.Evento", "Eventos")
+                    b.HasOne("PartyHome.Models.CasaDeShow", "CasaId")
                         .WithMany()
-                        .HasForeignKey("EventosId");
+                        .HasForeignKey("CasaIdId");
                 });
 
-            modelBuilder.Entity("PartyHome.Models.Evento", b =>
+            modelBuilder.Entity("PartyHome.Models.EventoApi", b =>
                 {
                     b.HasOne("PartyHome.Models.CasaDeShow", "CasaId")
                         .WithMany()
