@@ -6,7 +6,7 @@ using PartyHome.Models;
 
 namespace PartyHome.Controllers
 {
-    [Route("api/v1/usuarios")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsuarioApiController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace PartyHome.Controllers
             this.database = database;
             
         }     
-      [HttpGet]
+      [HttpGet(" Listar todos os Id")]
       public IActionResult Get() {
            if (database.Users.Count() > 0) 
            { var usuario = database.Users.Select(u => new { u.Id, u.Email }).ToList();
@@ -26,14 +26,14 @@ namespace PartyHome.Controllers
              return new ObjectResult("Não existem usuarios cadastrados"); 
              }
              }
-              [HttpGet("{email}")] 
-              public IActionResult Get (string email) 
-              { try 
-              { var usuario = database.Users.Select(user => new UserTemp { Id = user.Id, Email = user.Email }).First(c => c.Email == email); 
-              return Ok(usuario); 
+              [HttpGet("{id} Buscar id")]
+              public IActionResult Get (int id) 
+              { try {
+            UsuarioAPI usuarios = database.UsuariosAPI.First(p => p.Id == id);
+              return Ok(usuarios); 
               } catch (Exception) { 
                   Response.StatusCode = 404;
-                   return new ObjectResult("E-mail inválido"); 
+                   return new ObjectResult("Id inválido"); 
                    }
                     } 
                     public class UserTemp {

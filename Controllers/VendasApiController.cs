@@ -14,7 +14,7 @@ namespace PartyHome.Controllers
         public VendasApiController(ApplicationDbContext database){
         this.database = database;
         }
-        [HttpGet]
+        [HttpGet(" Listar todas as vendas")]
         public IActionResult Get(){
             var vendas = database.VendasApi.ToList();
             var cont = vendas.Count();
@@ -27,7 +27,7 @@ namespace PartyHome.Controllers
                 }
             }
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id} Buscar Id")]
         public IActionResult Get(int id){
             try{
             VendaApi venda = database.VendasApi.First(q => q.Id == id);

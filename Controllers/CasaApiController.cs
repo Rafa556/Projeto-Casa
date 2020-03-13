@@ -17,13 +17,13 @@ namespace PartyHome.Controllers
         public CasaApiController(ApplicationDbContext database){
             this.database = database;
         }
-        [HttpGet]
+        [HttpGet(" Listar todas as casas de show.")]
         public IActionResult Get(){
             var casadeshows = database.CasaDeShows.ToList();
             return Ok(casadeshows);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id} Buscar por casa de show pelo Id.")]
         public IActionResult Get(int id){
             try{
             CasaDeShow casadeshows = database.CasaDeShows.First(p => p.Id == id);
@@ -33,7 +33,7 @@ namespace PartyHome.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost(" Adicionar uma casa de show.")]
         public IActionResult Post([FromBody] CasaApi casaapi){
             if(casaapi != null){
                 try{
@@ -66,7 +66,7 @@ namespace PartyHome.Controllers
             }
             
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id} Deletar uma casa de show.")]
         public IActionResult Delete(int id){
             try{
             CasaDeShow casadeshows = database.CasaDeShows.First(p => p.Id == id);
@@ -79,7 +79,7 @@ namespace PartyHome.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPatch(" Atualizar uma casa de show.")]
         public IActionResult Patch([FromBody] CasaDeShow casadeshow){
             
             if(casadeshow.Id > 0){
@@ -110,7 +110,7 @@ namespace PartyHome.Controllers
 
             }
         }
-        [HttpGet("nome")]
+        [HttpGet("nome/{nome} Buscar casa por nome.")]
         public IActionResult GetCasaByNome(string CasaApi){
             if(database.CasaDeShows.Count() > 0){
                 if(database.CasaDeShows.Where(c => c.Nome == CasaApi).Count() == 0){
@@ -132,12 +132,12 @@ namespace PartyHome.Controllers
 
             }
         }
-        [HttpGet("asc")]
+        [HttpGet("asc Listar casas em ordem alfabética crescente por nome.")]
         public IActionResult GetCasaByAsc(){
             var CasaDeShow = database.CasaDeShows.OrderBy(NomeA => NomeA.Nome).ToList();
             return Ok(CasaDeShow);
             }
-        [HttpGet("desc")]
+        [HttpGet("desc Listar casas em ordem alfabética decrescente por nome.")]
         public IActionResult GetCasaByDesc(){
             var CasaDeShow = database.CasaDeShows.OrderByDescending(NomeD => NomeD.Nome).ToList();
             return Ok(CasaDeShow);

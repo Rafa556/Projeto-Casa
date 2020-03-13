@@ -16,14 +16,14 @@ namespace PartyHome.Controllers
         public EventoApiController(ApplicationDbContext database){
             this.database = database;
         }
-        [HttpGet]
+        [HttpGet(" Listar eventos")]
 
         public IActionResult Get(){
             var eventos = database.Eventos.ToList();
             return Ok(eventos);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id} Listar eventos pelo Id.")]
 
         public IActionResult Get(int id){
             try{
@@ -34,7 +34,7 @@ namespace PartyHome.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost(" Adicionar Evento.")]
 
         public IActionResult Post([FromBody] EventoApi eApi){
 
@@ -53,7 +53,7 @@ namespace PartyHome.Controllers
             return new ObjectResult(new {msg = "Evento criado!"});
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id} Deletar Evento.")]
         public IActionResult Delete(int id){
             try{
             Evento evento = database.Eventos.First(q => q.Id == id);
@@ -66,7 +66,7 @@ namespace PartyHome.Controllers
 
             }
         }
-        [HttpPatch]
+        [HttpPatch(" Atualizar Evento.")]
         public IActionResult Patch([FromBody] Evento evento){
             
             if(evento.Id > 0){
@@ -104,47 +104,47 @@ namespace PartyHome.Controllers
             }
         }
 
-        [HttpGet("nome/asc")]
+        [HttpGet("nome/asc Listar eventos em ordem alfabética crescente por nome.")]
         public IActionResult GetEventoNomeByAsc(){
             var Evento = database.Eventos.OrderBy(NomeA => NomeA.Event).ToList();
             return Ok(Evento);
             }
 
-        [HttpGet("nome/desc")]
+        [HttpGet("nome/desc Listar eventos em ordem alfabética decrescente por nome.")]
         public IActionResult GetEventoNomeByDesc(){
             var Evento = database.Eventos.OrderByDescending(NomeA => NomeA.Event).ToList();
             return Ok(Evento);
             }
 
-        [HttpGet("capacidade/asc")]
+        [HttpGet("capacidade/asc Listar eventos em ordem alfabética crescente por capacidade.")]
         public IActionResult GetEventoCapacidadeByAsc(){
             var Evento = database.Eventos.OrderBy(CapA => CapA.Capacidade).ToList();
             return Ok(Evento);
             }
 
-            [HttpGet("capacidade/desc")]
+            [HttpGet("capacidade/desc Listar eventos em ordem alfabética decrescente por capacidade.")]
         public IActionResult GetEventoCapacidadeByDesc(){
             var Evento = database.Eventos.OrderByDescending(CapA => CapA.Capacidade).ToList();
             return Ok(Evento);
             }
 
-        [HttpGet("preco/asc")]
+        [HttpGet("preco/asc Listar eventos em ordem alfabética crescente por preço.")]
         public IActionResult GetEventoCustoByAsc(){
             var Evento = database.Eventos.OrderBy(PrecoA => PrecoA.Custo).ToList();
             return Ok(Evento);
             }
 
-            [HttpGet("preco/desc")]
+            [HttpGet("preco/desc Listar eventos em ordem alfabética decrescente por preço.")]
         public IActionResult GetEventoCustoByDesc(){
             var Evento = database.Eventos.OrderByDescending(PrecoA => PrecoA.Custo).ToList();
             return Ok(Evento);
             }
-        [HttpGet("data/asc")]
+        [HttpGet("data/asc Listar eventos em ordem alfabética crescente por data.")]
         public IActionResult GetEventoDataByAsc(){
             var Evento = database.Eventos.OrderBy(DataA => DataA.Data).ToList();
             return Ok(Evento);
             }
-            [HttpGet("data/desc")]
+            [HttpGet("data/desc Listar eventos em ordem alfabética decrescente por data.")]
         public IActionResult GetEventoDataByDesc(){
             var Evento = database.Eventos.OrderByDescending(DataA => DataA.Data).ToList();
             return Ok(Evento);

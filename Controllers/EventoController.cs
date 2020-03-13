@@ -26,8 +26,8 @@ namespace PartyHome.Controllers
         }        
 
         public IActionResult Editar(int Id){
-            ViewBag.CasaDeShows =database.CasaDeShows.ToList();
             Evento evento = database.Eventos.First(registro => registro.Id == Id);
+            ViewBag.CasaDeShows = database.CasaDeShows.ToList();
             return View("Cadastrar", evento);
         }
         public IActionResult Deletar(int Id){
